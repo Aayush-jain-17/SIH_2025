@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroBots | Add Property</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #2D6A6B;
+      --secondary-color: #5AA1A3;
+      --light-bg-color: #D3E0E2;
+      --dark-bg-color: #1A3E3F;
+      --card: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --container: 1200px;
+      --gap: 18px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg-color);
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-color);
+      padding: 1rem 2rem;
+      color: white;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+    }
+
+    .logo h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+
+    .navbar a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    .navbar a.active {
+      border-bottom: 2px solid white;
+    }
+
+    /* MAIN CONTAINER */
+    .main-container {
+      display: flex;
+      max-width: var(--container);
+      margin: 2rem auto;
+      gap: var(--gap);
+      padding: 0 1rem;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      flex: 1;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--dark-bg-color);
+    }
+
+    label {
+      display: block;
+      margin-top: 0.8rem;
+      font-weight: 600;
+      color: var(--dark-bg-color);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 1.2rem;
+      padding: 0.8rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--secondary-color);
+    }
+
+    /* PROPERTY LIST */
+    .property-list {
+      flex: 1;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-y: auto;
+    }
+
+    .property-card {
+      background: var(--light-bg-color);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    }
+
+    .property-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+
+    .delete-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      float: right;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+      }
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .navbar {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.png" alt="HydroBots Logo" class="logo-img">
+      <h2>HydroBots</h2>
+    </div>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="calculate.html">Calculate</a>
+      <a href="add-property.html" class="active">Add Property</a>
+      <a href="rainfall.html">Fetch Rainfall</a>
+      
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-container">
+    <!-- FORM SECTION -->
+    <div class="form-card">
+      <h1>Add New Property</h1>
+      <form id="propertyForm">
+        <label for="propertyName">Property Name:</label>
+        <input type="text" id="propertyName" placeholder="e.g. My House" required>
+
+        <label for="roofArea">Roof Area (sq.m):</label>
+        <input type="number" id="roofArea" placeholder="Enter roof area" required>
+
+        <label for="openSpace">Available Open Space (sq.m):</label>
+        <input type="number" id="openSpace" placeholder="Enter open space area" required>
+
+        <label for="location">Select Location:</label>
+        <select id="location" required>
+          <option value="">--Choose Location--</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Ahmedabad">Ahmedabad</option>
+          <option value="Kolkata">Kolkata</option>
+        </select>
+
+        <button type="submit" class="btn">Add Property</button>
+      </form>
+    </div>
+
+    <!-- PROPERTY LIST SECTION -->
+    <div class="property-list" id="propertyList">
+      <h1>Saved Properties</h1>
+      <!-- Dynamic property cards will appear here -->
+    </div>
+  </div>
+</body>
+</html>

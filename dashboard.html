@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HydroBots — Dashboard</title>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root{
+      --accent:#0b74d1;
+      --accent-2:#0288d1;
+      --bg:#f5f8fb;
+      --card:#ffffff;
+      --muted:#5b6770;
+      --radius:12px;
+      --container:1200px;
+      --shadow: 0 8px 24px rgba(11,24,40,0.06);
+      --gap:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:#0f1720;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .app {
+      max-width:var(--container);
+      margin:20px auto;
+      padding:18px;
+      display:grid;
+      grid-template-columns: 240px 1fr;
+      gap:var(--gap);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      height:calc(100vh - 56px);
+      position:sticky;
+      top:20px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .brand {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:6px;
+    }
+    .logo {
+      width:46px;height:46px;border-radius:10px;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      color:white;display:grid;place-items:center;font-weight:700;
+    }
+    .brand h2{font-size:16px;margin:0}
+    .brand p{font-size:12px;color:var(--muted);margin:0}
+
+    .nav {
+      margin-top:6px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .nav a {
+      padding:10px 12px;border-radius:8px;color:var(--muted);
+      text-decoration:none;font-weight:600;
+    }
+    .nav a.active, .nav a:hover {
+      background:linear-gradient(90deg, rgba(3,115,203,0.06), rgba(0,150,220,0.03));
+      color:var(--accent);
+    }
+
+    .sidebar .small {
+      margin-top:auto;
+      font-size:13px;color:var(--muted);
+    }
+
+    /* TOP AREA + MAIN */
+    .main {
+      display:flex;
+      flex-direction:column;
+      gap:var(--gap);
+    }
+
+    .topbar {
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;
+      border-radius:10px;
+      padding:14px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow: 0 10px 30px rgba(2,51,102,0.12);
+    }
+    .top-left h1{margin:0;font-size:20px}
+    .top-left p{margin:0;font-size:13px;opacity:0.95}
+    .top-actions {display:flex;gap:10px;align-items:center}
+    .btn {background:white;color:var(--accent);padding:8px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .avatar{width:40px;height:40px;border-radius:50%;background:#fff6;display:grid;place-items:center;color:white;font-weight:700}
+
+    /* GRID CONTENT */
+    .grid {
+      display:grid;
+      grid-template-columns: 2fr 1fr;
+      gap:var(--gap);
+    }
+
+    /* Left big cards */
+    .card {
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .stats-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    .kpi {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .kpi .value{font-size:28px;font-weight:800}
+    .kpi .label{color:var(--muted);font-size:13px}
+
+    /* properties section */
+    .properties {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .property {
+      background:linear-gradient(180deg,#fff, #fbfdff);
+      border-radius:10px;
+      padding:12px;
+      min-width:220px;
+      box-shadow: 0 6px 18px rgba(6,32,68,0.04);
+      border:1px solid rgba(8,20,40,0.03);
+    }
+    .property h4{margin:0 0 6px 0}
+    .property .meta{color:var(--muted);font-size:13px}
+    .property .big{font-weight:700;margin-top:6px}
+
+    /* right column small cards */
+    .side-grid {
+      display:grid;
+      grid-template-rows: auto auto;
+      gap:12px;
+    }
+    .action-box{display:flex;flex-direction:column;gap:10px}
+    .primary {background:var(--accent);color:white;padding:10px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .secondary {background:transparent;border:1px solid rgba(3,115,203,0.12);padding:10px;border-radius:10px;color:var(--accent);cursor:pointer;font-weight:700}
+
+    /* footer small area */
+    .mini-cards {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+
+    /* responsive */
+    @media(max-width:980px){
+      .app { grid-template-columns: 1fr; padding:12px }
+      .sidebar{ position:relative; height:auto; order:2 }
+      .main{order:1}
+      .grid{grid-template-columns:1fr}
+      .stats-grid{grid-template-columns:1fr}
+      .mini-cards{grid-template-columns:1fr}
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="brand">
+        <div class="logo">HB</div>
+        <div>
+          <h2>HydroBots</h2>
+          <p>Innovating Water, Securing Tomorrow</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+  <a href="dashboard.html" class="active">Dashboard</a>
+  <a href="calculate.html">Calculate</a>
+  <a href="add-property.html">Add Property</a>
+  <a href="INDEX.HTML">Home</a>
+
+</nav>
+
+
+      <div class="small">Logged in as <strong>Pradeep</strong></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main">
+      <!-- TOP BAR -->
+      <div class="topbar" role="banner">
+        <div class="top-left">
+          <h1>Dashboard</h1>
+          <p>Hi Pradeep 👋, here's your summary for this month</p>
+        </div>
+        <div class="top-actions">
+          <button class="btn">Export PDF</button>
+          <button class="btn">Share</button>
+          <div class="avatar">P</div>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <section class="grid" role="main">
+        <!-- LEFT: charts + KPIs -->
+        <div style="display:flex;flex-direction:column;gap:var(--gap)">
+
+          <!-- Water savings chart card -->
+          <div class="card" aria-labelledby="savingsTitle">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <h3 id="savingsTitle" style="margin:0">Water Savings (monthly)</h3>
+              <small style="color:var(--muted)">All properties combined</small>
+            </div>
+            <canvas id="savingsChart" style="margin-top:12px;height:220px"></canvas>
+          </div>
+
+          <!-- Properties & recommended -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Your Properties</h3>
+              <small style="color:var(--muted)">Manage saved properties</small>
+            </div>
+
+            <div class="properties" id="propertiesList">
+              <div class="property">
+                <h4>My House</h4>
+                <div class="meta">Roof area: 50 m²</div>
+                <div class="big">Estimated harvest: 25,000 L / year</div>
+                <div style="margin-top:10px">
+                  <button class="secondary" onclick="alert('Recommended pit size: 5 x 5 x 10 ft')">Recommended Pit Size</button>
+                </div>
+              </div>
+
+              <div class="property">
+                <h4>My Office</h4>
+                <div class="meta">Roof area: 40 m²</div>
+                <div class="big">Estimated harvest: 20,000 L / year</div>
+                <div style="margin-top:10px">
+                  <button class="secondary" onclick="alert('Recommended pit size: 4 x 4 x 8 ft')">Recommended Pit Size</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: KPIs, rainfall and actions -->
+        <aside style="display:flex;flex-direction:column;gap:var(--gap)">
+
+          <!-- small KPI cards -->
+          <div class="card">
+            <div class="stats-grid">
+              <div class="kpi">
+                <div class="label">Rainfall (Monthly)</div>
+                <div class="value" id="currentRainfall">182 mm</div>
+                <div style="color:var(--muted);font-size:13px">Mumbai</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Recharge Efficiency</div>
+                <div class="value" id="efficiency">50%</div>
+                <div style="color:var(--muted);font-size:13px">Based on soil & design</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- rotating rainfall chart (city-based) -->
+          <div class="card">
+            <h4 style="margin:0 0 8px 0">Rainfall (Monthly) — <span id="cityLabel">Mumbai</span></h4>
+            <canvas id="cityChart" style="height:160px"></canvas>
+          </div>
+
+          <!-- action box -->
+          <div class="card action-box">
+            <h4 style="margin:0">Actions</h4>
+            <button class="primary" onclick="location.href='#calculate'">Calculate</button>
+            <button class="secondary" onclick="location.href='#add-property'">Add Property</button>
+            <button class="secondary" onclick="location.href='#visualize'">Visualize</button>
+          </div>
+
+        </aside>
+      </section>
+
+      <!-- MINI FOOTER / EXTRA CARDS -->
+      <div class="card mini-cards" style="display:block">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <h4 style="margin:0 0 6px 0">Recharge Efficiency (details)</h4>
+            <p style="color:var(--muted);margin:0">Estimated percentage of rooftop runoff that will percolate to groundwater using recommended structures.</p>
+          </div>
+          <div style="flex:1;min-width:220px">
+            <h4 style="margin:0 0 6px 0">Download Report</h4>
+            <p style="color:var(--muted);margin:0">Export your property-wise calculations and recommended designs as PDF.</p>
+            <div style="margin-top:8px">
+              <button class="secondary" onclick="alert('Exporting...')">Export</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JS: Chart initializations and rotating city chart -->
+  <script>
+    // Savings chart (example line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(ctxSavings, {
+      type: 'line',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
+        datasets: [{
+          label: 'Water Saved (m³)',
+          data: [5, 18, 52, 58, 110, 95, 60],
+          fill: true,
+          backgroundColor: 'rgba(3,115,203,0.08)',
+          borderColor: 'rgba(3,115,203,0.95)',
+          tension: 0.35,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive:true,
+        plugins:{ legend:{ display:false } },
+        scales:{ y:{ beginAtZero:true } },
+        interaction:{mode:'index', intersect:false}
+      }
+    });
+
+    // City-based rainfall chart that rotates every 10s
+    const cityCtx = document.getElementById('cityChart').getContext('2d');
+    const cityData = {
+      Mumbai: [85, 80, 120, 130, 170, 140, 80],
+      Delhi:  [10, 12, 30, 40, 45, 30, 20],
+      Ahmedabad: [45,50,55,60,70,65,40],
+      Kolkata: [90,95,110,120,160,145,90]
+    };
+    const cityNames = Object.keys(cityData);
+    let cityIndex = 0;
+
+    const cityChart = new Chart(cityCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
+        datasets: [{
+          label: cityNames[cityIndex],
+          data: cityData[cityNames[cityIndex]],
+          backgroundColor: 'rgba(3,115,203,0.85)'
+        }]
+      },
+      options: {
+        responsive:true,
+        plugins:{ legend:{ display:false } },
+        scales:{ y:{ beginAtZero:true } },
+        animation: { duration: 800 }
+      }
+    });
+
+    // Update UI values (rainfall & efficiency) when city changes
+    function updateCityUI(name){
+      const monthly = cityData[name].reduce((a,b)=>a+b,0);
+      document.getElementById('cityLabel').textContent = name;
+      document.getElementById('currentRainfall').textContent = Math.round(monthly / cityData[name].length) + ' mm';
+      // Example: Efficiency mock (derive from monthly total) - placeholder logic
+      const eff = Math.min(80, Math.max(20, Math.round((monthly / 750) * 100)));
+      document.getElementById('efficiency').textContent = eff + '%';
+    }
+
+    // rotate every 10 seconds in pairs (first two cities shown, then next two etc.)
+    const rotationOrder = ['Mumbai', 'Delhi', 'Ahmedabad', 'Kolkata'];
+    updateCityUI(rotationOrder[0]);
+
+    setInterval(() => {
+      cityIndex = (cityIndex + 1) % rotationOrder.length;
+      const cityName = rotationOrder[cityIndex];
+      cityChart.data.datasets[0].label = cityName;
+      cityChart.data.datasets[0].data = cityData[cityName];
+      cityChart.update();
+      updateCityUI(cityName);
+    }, 10000);
+
+    // Example: if you later fetch real API data, replace cityData values and call cityChart.update()
+  </script>
+
+</body>
+</html>

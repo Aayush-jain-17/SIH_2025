@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HydroBots</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      /* Styles for the main image slideshows */
+      .image-slideshow {
+        width: 330px; 
+        height: 330px; 
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+        background-color: var(--primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        color: var(--light-bg-color);
+      }
+
+        .image-slideshow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .image-slideshow img.active {
+            opacity: 1;
+        }
+
+        /* Styles for the new, smaller slideshow */
+        .small-slideshow {
+            width: 440px; 
+            height: 75px; 
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            background-color: var(--dark-bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: var(--light-bg-color);
+            text-align: center; 
+            padding: 10px; 
+        }
+
+        .small-slideshow img {
+            display: none; 
+        }
+        
+        /* New style for text slides */
+        .small-slideshow .text-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .small-slideshow .text-slide.active {
+            opacity: 1;
+        }
+        
+        /* Container styles for alignment */
+        .stats-image-container, .stats-secondary-slideshow-container, .small-slideshow-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    
+ <header class="hero">
+    <div class="hero-bg"></div>
+
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="HydroBots Logo" class="logo-img">
+        <h2>HydroBots</h2>
+      </div>
+
+      <div class="auth-links">
+        <a href="sign-in.html" class="auth-btn">SIGN UP</a>
+        <a href="login.html" class="auth-btn">LOGIN</a>
+      </div>
+    </nav>
+
+    <nav class="sub-navbar" aria-label="secondary navigation">
+      <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="add-property.html">Add Property</a></li>
+          <li><a href="calculate.html">Calculator</a></li>
+          <li><a href="rainfall.html">Fetch Rainfall</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <h1>HydroBots</h1>
+      <p>“Catch the Rain, where it falls, when it falls.”</p>
+      <a href="#initiatives" class="btn">LEARN MORE</a>
+    </div>
+  </header>
+    
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-content">
+        <div class="stats-image-container">
+          <div class="image-slideshow" id="image-slideshow-1">
+            <img class="active" src="image 1.png" alt="Government Scheme Image 1">
+            <img src="image 2.png" alt="Government Scheme Image 2">
+            <img src="image 3.png" alt="Government Scheme Image 3">
+          </div>
+        </div>
+        
+        <div class="stats-secondary-slideshow-container">
+          <div class="image-slideshow" id="image-slideshow-2">
+            <img class="active" src="slide 1.png" alt="Slideshow Image A">
+            <img src="slide 2.png" alt="Slideshow Image B">
+            <img src="slide 3.png" alt="Slideshow Image C">
+          </div>
+        </div>
+      </div>
+      
+      <div class="small-slideshow-container">
+        <div class="small-slideshow" id="small-slideshow">
+          <div class="text-slide active">Indore could have saved 322 billion liters water !</div>
+          <div class="text-slide">Mumbai could have saved 1,521 billion liters water !</div>
+          <div class="text-slide">Delhi could have saved 1,651 billion liters of water !</div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+    <section class="initiatives-section" id="initiatives">
+        <div class="container">
+            <h2>OUR INITIATIVES<br>INCLUDES</h2>
+            <div class="initiatives-grid">
+                <div class="initiative-card">
+                    <h3>Digital Water Monitoring</h3>
+                    <p>Our platform provides easy-to-understand dashboards showing groundwater trends, rainfall history, and potential recharge gains for better decision-making.</p>
+                </div>
+                <div class="initiative-card">
+                    <h3>Data Sharing with Local Authorities</h3>
+                    <p>Our platform can optionally share recharge potential data with municipal bodies to assist in city-level planning.</p>
+                </div>
+                <div class="initiative-card">
+                    <h3>Subsidy & Scheme Assistance</h3>
+                    <p>We guide Users to apply for state and central government subsidies, making rainwater harvesting more affordable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Rooftop Harvesting</h2>
+                    <p>Unlike groundwater, rainwater contains very low levels of dissolved salts and minerals, making it ideal for washing clothes, industrial cooling, and even battery water without additional treatment.
+                    When excess harvested rainwater is directed underground through recharge wells, it can travel long distances through natural underground channels, improving groundwater levels in surrounding areas, even kilometers away.
+                    Less demand on groundwater pumping means lower electricity usage, since pumping deep aquifers requires significant energy. This indirectly cuts down carbon emissions.</p>
+                    
+                </div>
+                <div class="about-image">
+                    </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="columns-section">
+        <div class="container">
+            <div class="columns-grid">
+                <div class="column-card">
+                    <h3>Benefit</h3>
+                    <p>Our platform makes water conservation simple by helping you estimate how much rainwater you can collect and how much money you can save every year it turs raw data into easy insights so you can make informed decisions for a sustainable future.</p>
+                </div>
+                <div class="column-card">
+                    <h3>Rainfall History</h3>
+                    <p>Discover how rainfall patterns affect water availability in your area. Our platform gives you clear insights into past and seasonal rainfall, helping you plan the right storage capacity and stay prepared for dry months.</p>
+                </div>
+                <div class="column-card">
+                    <h3>Community Engagement</h3>
+                    <p>Join a growing network of homeowners, local bodies, and NGOs working toward water security. We also share details of government schemes and subsidies, making it easier for you to adopt rainwater harvesting and inspire your community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+  <section class="contribute-section">
+    <div class="contribute-bg"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <h2>Contribute to us</h2>
+      <div class="contribute-quotes">
+        <div class="quote">
+          "Thousands have lived without love, not one without water."
+          <span>- W. H. Auden (Famous Poet)</span>
+        </div>
+        <div class="quote">
+          "No water, no life. No blue, no green."
+          <span>- Sylvia Earle (Renowned Marine Biologist & Oceanographer)</span>
+        </div>
+        <div class="quote">
+          "We forget that the water cycle and the life cycle are one."
+          <span>- Jacques Yves Cousteau (Explorer & Conservationist)</span>
+        </div>
+      </div>
+      <a href="#" class="btn secondary">RAINWATER HARVESTED & REUSED</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-column">
+        <div class="footer-logo">
+          <img src="logo.png" alt="HydroBots Logo" class="footer-logo-img">
+          <h3>Team HydroBots</h3>
+        </div>
+        <p style="font-size: 0.9rem;">
+          We are on a mission to make rainwater harvesting simple, accessible, and impactful for every household and community. Our vision is a future where no drop of rainwater goes to waste.
+        </p>
+        <p style="font-size: 0.9rem;">
+         <p style="font-size: 0.9rem;">
+          “Catch the Rain, where it falls, when it falls.”
+        </p>
+        </p>
+        
+      </div>
+      <div class="footer-column">
+        <h4>EXPLORE</h4>
+        <ul>
+          <li><a href="#">HOME</a></li>
+          <li><a href="#">CSR ACTIVITIES</a></li>
+          <li><a href="#">GET INVOLVED</a></li>
+          <li><a href="#">ABOUT US</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>CONTACT US</h4>
+        <ul class="footer-contact">
+          <li><span>+911478852369</span></li>
+          <li><span>+913698522147</span></li>
+          <li><span>HydroBots1@co.in<br>HydroBots2@co.in</span></li>
+          <li><span>Institute of Engineering & Technology, DAVV<br>Indore Madhya Pradesh</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const slideshow1 = document.getElementById('image-slideshow-1');
+        const images1 = slideshow1.getElementsByTagName('img');
+        let currentImageIndex1 = 0;
+
+        const slideshow2 = document.getElementById('image-slideshow-2');
+        const images2 = slideshow2.getElementsByTagName('img');
+        let currentImageIndex2 = 0;
+        
+        const slideshow3 = document.getElementById('small-slideshow');
+        const slides3 = slideshow3.getElementsByClassName('text-slide');
+        let currentSlideIndex3 = 0;
+
+        function showNextImage() {
+          images1[currentImageIndex1].classList.remove('active');
+          currentImageIndex1 = (currentImageIndex1 + 1) % images1.length;
+          images1[currentImageIndex1].classList.add('active');
+
+          images2[currentImageIndex2].classList.remove('active');
+          currentImageIndex2 = (currentImageIndex2 + 1) % images2.length;
+          images2[currentImageIndex2].classList.add('active');
+
+          slides3[currentSlideIndex3].classList.remove('active');
+          currentSlideIndex3 = (currentSlideIndex3 + 1) % slides3.length;
+          slides3[currentSlideIndex3].classList.add('active');
+        }
+
+        setInterval(showNextImage, 5000);
+      });
+    </script>
+
+</body>
+</html>

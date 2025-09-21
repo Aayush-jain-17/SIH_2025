@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Account</title>
+  <style>
+    /* Reset default margins/padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('sun.png') no-repeat center center/cover;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.4); /* translucent white */
+      backdrop-filter: blur(10px);           /* blur effect */
+      padding: 40px;
+      border-radius: 16px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-container h2 {
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 25px;
+      border: 2px solid #3a7afe;
+      outline: none;
+      background: transparent;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .form-container input::placeholder {
+      color: #444;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      background: #0050ff;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background: #003bb3;
+    }
+
+    .form-container p {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .form-container p a {
+      color: #0050ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-container p a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Create an Account</h2>
+    <form>
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="E-mail" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Log In</a></p>
+  </div>
+</body>
+</html>
